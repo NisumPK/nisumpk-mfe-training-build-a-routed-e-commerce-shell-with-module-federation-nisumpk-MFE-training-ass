@@ -1,0 +1,12 @@
+{
+  "name": "mfe-ecommerce-assignment",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Dev convenience launcher only \u2014 each app (shell/home/product/shop) remains independent with its own package.json and can be run/deployed on its own.",
+  "scripts": {
+    "dev": "concurrently -k -n home,product,shop,shell -c blue,green,magenta,yellow \"npm --prefix home run dev\" \"npm --prefix product run dev\" \"npm --prefix shop run dev\" \"npm --prefix shell run dev\""
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

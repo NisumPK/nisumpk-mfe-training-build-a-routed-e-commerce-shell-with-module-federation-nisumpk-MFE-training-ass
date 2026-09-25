@@ -1,3 +1,4 @@
+[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/goQJehXc)
 # 🧩 MFE Assignment: Build a Routed E-Commerce Shell with Module Federation
 
 **Home, Product & Shop — Independently Deployable Pages with Fault-Tolerant Routing**
@@ -333,6 +334,42 @@ Then open:
 ```bash
 http://localhost:5000
 ```
+
+-----------------------------------------
+
+## 🚀 Deployment Instructions (Bonus)
+
+Each app (`shell`, `home`, `product`, `shop`) is independently deployable. Steps to deploy for real:
+
+1. **Build each app separately:**
+   ```bash
+   cd home && npm run build      # outputs to home/dist
+   cd product && npm run build   # outputs to product/dist
+   cd shop && npm run build      # outputs to shop/dist
+   cd shell && npm run build     # outputs to shell/dist
+   ```
+
+2. **Host each `dist/` folder** on a static host that supports CORS (e.g. Vercel, Netlify, GitHub Pages, S3 + CloudFront). Each app gets its own URL, e.g.:
+   ```
+   home    -> https://home-yourapp.vercel.app
+   product -> https://product-yourapp.vercel.app
+   shop    -> https://shop-yourapp.vercel.app
+   shell   -> https://shell-yourapp.vercel.app
+   ```
+
+3. **Point the shell at the deployed remotes.** Currently `shell/vite.config.js` hardcodes remote URLs to `localhost` for local dev:
+   ```js
+   remotes: {
+     home: 'http://localhost:5001/assets/remoteEntry.js',
+     product: 'http://localhost:5002/assets/remoteEntry.js',
+     shop: 'http://localhost:5003/assets/remoteEntry.js',
+   }
+   ```
+   For production, these should be switched to the deployed `remoteEntry.js` URLs (e.g. via environment variables so dev keeps using `localhost` and prod uses the real deployed URLs), then the shell rebuilt and redeployed.
+
+4. **Verify CORS/HTTPS.** Each remote's host must serve `remoteEntry.js` with CORS enabled (most static hosts do this by default) and over HTTPS to avoid mixed-content issues when the shell is also served over HTTPS.
+
+> Note: This section documents *how* to deploy; the apps have not been deployed as part of this submission.
 
 -----------------------------------------
 
